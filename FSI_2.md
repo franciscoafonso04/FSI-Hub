@@ -324,7 +324,7 @@
 #### **1.1 Before Public Key Cryptography**
 - Relied solely on **symmetric cryptography**.
   - Pre-shared keys were required for communication.
-  - Scaling problems: \( n(n-1)/2 \) keys for \( n \) participants.
+  - Scaling problems: n(n-1)/2 keys for n participants.
 - Limitations in asynchronous, open systems.
 
 #### **1.2 Breakthrough (1975-1978)**
@@ -338,7 +338,7 @@
 ### **2. Key Management**
 
 #### **2.1 Symmetric Cryptography Challenges**
-- Requires \( n(n-1)/2 \) keys for \( n \) participants.
+- Requires n(n-1)/2 keys for n participants.
 - Centralized solutions (e.g., Key Distribution Centers):
   - Each participant shares one long-term key with the center.
   - Single point of failure.
@@ -360,19 +360,22 @@
 
 ### **3. Public Key Encryption**
 
+- **Public Key ( pk )**: Used for encryption.
+- **Secret Key ( sk )**: Used for decryption.
+- **Session Key ( pk )**.
+  
 #### **3.1 Core Concepts**
-- **Public Key (\( pk \))**: Used for encryption.
-- **Secret Key (\( sk \))**: Used for decryption.
+
 - Workflow:
-  1. \( c \leftarrow E(pk, p) \): Encrypt plaintext \( p \) with \( pk \).
-  2. \( p \leftarrow D(sk, c) \): Decrypt ciphertext \( c \) with \( sk \).
+  1. c = Encrypt(pk, plaintext): Encrypt plaintext ( p ) with ( pk ).
+  2. plaintext = Decrypt(sk, c): Decrypt ciphertext ( c ) with ( sk ).
 
 #### **3.2 Key Encapsulation Mechanisms (KEMs)**
 - Asymmetric encryption is computationally expensive.
 - Hybrid approach:
-  1. Generate a symmetric session key \( k \).
-  2. Encrypt \( k \) using \( pk \).
-  3. Use \( k \) to encrypt the message.
+  1. Generate a symmetric session key ( k ).
+  2. Encrypt ( k ) using ( pk ).
+  3. Use ( k ) to encrypt the message.
 
 ---
 
@@ -384,13 +387,13 @@
   2. **Integrity**: Detects message tampering.
   3. **Non-repudiation**: Sender cannot deny authorship.
 - Workflow:
-  1. \( s \leftarrow Sign(sk, p) \): Sign message \( p \) with \( sk \).
-  2. \( T/F \leftarrow Verify(pk, p, s) \): Verify signature \( s \) using \( pk \).
+  1. signature = Sign(sk, message): Sign message with ( sk ).
+  2. valid = Verify(pk, message, signature): Verify signature ( s ) using ( pk ).
 
 #### **4.2 Example: RSA Signatures**
-1. Generate keys: \( (pk, sk) \leftarrow Gen() \).
-2. Signing: \( \sigma \leftarrow F^{-1}(sk, H(m)) \).
-3. Verification: \( T \iff F(pk, H(m)) = \sigma \).
+1. Generate keys:  (pk, sk) = KeyGen().
+2. Signing: signature = Decrypt(sk, Hash(message)).
+3. Verification: valid if Encrypt(pk, Hash(message)) == signature.
    - Hashing is critical to prevent forgery.
 
 ---
@@ -400,9 +403,9 @@
 #### **5.1 Diffie-Hellman (DH)**
 - **Objective**: Establish a symmetric key over an insecure channel.
 - Workflow:
-  1. Public parameters: Group \( G \), generator \( g \).
-  2. Alice: \( X \leftarrow g^x \), Bob: \( Y \leftarrow g^y \).
-  3. Shared key: \( K \leftarrow g^{xy} \).
+  1. Public parameters: Group G, generator g.
+  2. Alice computes g^a, Bob computes g^b.
+  3. Shared key: g^(ab).
 
 #### **5.2 Limitations**
 - Vulnerable to **Man-in-the-Middle (MitM)** attacks.
@@ -436,8 +439,8 @@
 
 #### **7.1 Secure Email**
 - Workflow:
-  1. Sign the message: \( \sigma \leftarrow Sign(sk_A, m) \).
-  2. Encrypt: \( c \leftarrow E(pk_B, (m, \sigma)) \).
+  1. Sign the message: Sign(sk_sender, message).
+  2. Encrypt: encrypted_message = Encrypt(pk_recipient, (message, signature)).
   3. Verify on receipt.
 - Challenges:
   - Metadata integrity: Include recipient information in the signature.
