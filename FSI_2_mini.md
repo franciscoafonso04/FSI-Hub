@@ -1,4 +1,4 @@
-# Complete and Detailed Study Guide for the Exam: Fundamentals of Security
+# Resumo Teste 2 - Mini
 
 ## **1. Cryptography Fundamentals**
 
